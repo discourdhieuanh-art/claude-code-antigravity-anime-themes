@@ -1,0 +1,5 @@
+{
+  "name": "local-theme-default",
+  "owner": { "name": "anime-themes-claude-antigravity" },
+  "plugins": [{ "name": "theme-examples-default", "source": "./" }]
+}

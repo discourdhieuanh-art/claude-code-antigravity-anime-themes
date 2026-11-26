@@ -1,0 +1,9 @@
+# Anh/video co ban quyen cua nguoi khac: tu tai bang script, khong dua len repo
+claude/frames/
+claude/preview/
+claude/plugin/theme-examples-default/hooks/scenes/whale-moon-pixel/still.ts
+claude/plugin/theme-examples-default/hooks/scenes/pixel-duo/stills.ts
+*.mp4
+*.png
+*.jpg
+*.webp

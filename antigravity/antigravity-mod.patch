@@ -1,0 +1,68 @@
+diff --git a/daemon/theme_daemon.js b/daemon/theme_daemon.js
+index ca86a87..14bcf4a 100644
+--- a/daemon/theme_daemon.js
++++ b/daemon/theme_daemon.js
+@@ -268,12 +268,20 @@ const MEDIA_MIME = {
+ 
+ function startMediaServer() {
+     mediaServer = http.createServer((req, res) => {
+-        res.setHeader('Access-Control-Allow-Origin', '*');
+-        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+-        res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Range');
++        // LOCAL SECURITY PATCH: only Antigravity's own window (served from https://127.0.0.1:<port>) may use this
++        // server through the browser. Any other website gets no CORS grant, and the endpoints that list, upload or
++        // delete files refuse requests whose Origin is not Antigravity's (a browser always sends Origin on a POST).
++        const origin = String(req.headers.origin || '');
++        const isAppOrigin = /^https?:\/\/(127\.0\.0\.1|localhost):\d+$/.test(origin);
++        if (isAppOrigin) {
++            res.setHeader('Access-Control-Allow-Origin', origin);
++            res.setHeader('Vary', 'Origin');
++            res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
++            res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Range');
++        }
+ 
+         if (req.method === 'OPTIONS') {
+-            res.writeHead(204);
++            res.writeHead(isAppOrigin ? 204 : 403);
+             res.end();
+             return;
+         }
+@@ -281,6 +289,16 @@ function startMediaServer() {
+         const reqUrl = new URL(req.url || '/', 'http://127.0.0.1');
+         const pathname = decodeURIComponent(reqUrl.pathname || '/');
+ 
++        const isFileOperation =
++            (req.method === 'GET' && pathname === '/user_media_list') ||
++            (req.method === 'POST' && (pathname === '/upload' || pathname === '/delete_media'));
++        if (isFileOperation && !isAppOrigin) {
++            res.writeHead(403, { 'Content-Type': 'application/json' });
++            res.end(JSON.stringify({ error: 'Forbidden: only the Antigravity window may manage media' }));
++            req.resume();
++            return;
++        }
++
+         if (req.method === 'GET' && pathname === '/user_media_list') {
+             try {
+                 res.writeHead(200, { 'Content-Type': 'application/json' });
+diff --git a/engine/core.js b/engine/core.js
+index 8a80637..d00346a 100644
+--- a/engine/core.js
++++ b/engine/core.js
+@@ -4108,11 +4108,12 @@
+   function injectMainSidebarButton() {
+     if (document.getElementById('agy-custom-theme-sidebar-btn')) return;
+ 
+-    const sidebar = document.querySelector('.bg-sidebar');
+-    if (!sidebar) return;
+-
+-    const spans = Array.from(sidebar.querySelectorAll('span'));
+-    const customSpan = spans.find(s => s.textContent?.trim() === 'Customizations');
++    // LOCAL FIX: newer Antigravity builds have several `.bg-sidebar` elements and the nav is not in the first one,
++    // so look for the "Customizations" entry in all of them, then anywhere on the page.
++    const isCustomizations = (s) => s.childElementCount === 0 && s.textContent?.trim() === 'Customizations';
++    const sidebarSpans = Array.from(document.querySelectorAll('.bg-sidebar span'));
++    const customSpan = sidebarSpans.find(isCustomizations)
++      || Array.from(document.querySelectorAll('span')).find(isCustomizations);
+     if (!customSpan) return;
+ 
+     const row = customSpan.closest('a, button, div[role="button"], .group\\/headerbtn') || customSpan.parentElement;
