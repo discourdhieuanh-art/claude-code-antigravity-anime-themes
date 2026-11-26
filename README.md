@@ -1,4 +1,8 @@
-# Anime themes cho Claude desktop và Antigravity
+# Claude Code & Antigravity Anime Themes
+
+Anime live wallpaper / video background themes for **Google Antigravity** and pixel-art animated themes for **Claude Code desktop** (Claude desktop app, Code tab). Keywords: claude code theme, claude desktop theme, antigravity theme, antigravity custom theme, anime wallpaper, live background, pixel art.
+
+## Tiếng Việt
 
 Hai bộ theme:
 
@@ -14,7 +18,7 @@ Hai bộ theme:
 Cần: `git`, `curl`, `ffmpeg`, `python3`, `python3-pil` (Pillow có libimagequant), Node.js 22+ cho Antigravity.
 
 ```bash
-git clone <repo này> && cd anime-themes-claude-antigravity
+git clone https://github.com/<tài-khoản>/claude-code-antigravity-anime-themes.git && cd claude-code-antigravity-anime-themes
 ./antigravity/install.sh           # clone mod gốc, áp bản vá, thêm preset, tải video
 bash ~/.local/share/antigravity-theme-mod/scripts/install-unix.sh   # daemon nền của mod gốc
 ./claude/install.sh                # cắt khung hình, tạo ảnh pixel, cài plugin vào Claude
