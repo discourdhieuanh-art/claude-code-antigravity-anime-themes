@@ -18,7 +18,7 @@ Hai bộ theme:
 Cần: `git`, `curl`, `ffmpeg`, `python3`, `python3-pil` (Pillow có libimagequant), Node.js 22+ cho Antigravity.
 
 ```bash
-git clone https://github.com/<tài-khoản>/claude-code-antigravity-anime-themes.git && cd claude-code-antigravity-anime-themes
+git clone https://github.com/discourdhieuanh-art/claude-code-antigravity-anime-themes.git && cd claude-code-antigravity-anime-themes
 ./antigravity/install.sh           # clone mod gốc, áp bản vá, thêm preset, tải video
 bash ~/.local/share/antigravity-theme-mod/scripts/install-unix.sh   # daemon nền của mod gốc
 ./claude/install.sh                # cắt khung hình, tạo ảnh pixel, cài plugin vào Claude

@@ -1,5 +1,5 @@
 {
   "name": "local-theme-default",
-  "owner": { "name": "claude-code-antigravity-anime-themes" },
+  "owner": { "name": "discourdhieuanh-art" },
   "plugins": [{ "name": "theme-examples-default", "source": "./" }]
 }
