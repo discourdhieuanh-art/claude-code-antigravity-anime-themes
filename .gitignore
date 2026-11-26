@@ -7,3 +7,4 @@ claude/plugin/theme-examples-default/hooks/scenes/pixel-duo/stills.ts
 *.png
 *.jpg
 *.webp
+!docs/demo/*.gif

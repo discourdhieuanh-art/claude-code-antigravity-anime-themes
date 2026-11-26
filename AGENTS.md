@@ -22,6 +22,8 @@ Requires git, curl, ffmpeg, python3 with Pillow (libimagequant), Node.js 22+. Se
 ## Rules
 - Do not commit videos, images, frames, previews or the generated `still.ts` / `stills.ts` of the pixel themes:
   they derive from fan art owned by others. Scripts download them from the original authors (see README).
+  The only exception is the short demo GIFs in `docs/demo`, rebuilt by `python3 docs/make_demos.py <videos> <claude/preview>`.
+- README is bilingual: keep `README.md` (English) and `README.vi.md` (Vietnamese) in step.
 - Claude backdrop SVG: at most 131,072 characters, no `data:` URLs. Shader `fps` must be 30 or 60; do not mix
   `int` and `number`. After editing the plugin, bump `version` in `.claude-plugin/plugin.json`, then
   `claude plugin validate`, `claude plugin marketplace update local-theme-default`,

@@ -1,74 +1,106 @@
 # Claude Code & Antigravity Anime Themes
 
-Anime live wallpaper / video background themes for **Google Antigravity** and pixel-art animated themes for **Claude Code desktop** (Claude desktop app, Code tab). Keywords: claude code theme, claude desktop theme, antigravity theme, antigravity custom theme, anime wallpaper, live background, pixel art.
+**English** | [Tiếng Việt](README.vi.md)
 
-## Tiếng Việt
+Anime live wallpaper (video background) themes for **Google Antigravity**, and animated pixel-art themes for the **Claude Code desktop app** (Claude desktop, Code tab). Install scripts for Linux and macOS, and an [AGENTS.md](AGENTS.md) for AI coding agents.
 
-Hai bộ theme:
+- **Antigravity**: a looping video behind the whole editor, frosted-glass panels, 9 presets (5 new) switched from the **Custom theme** button in the sidebar. Built on [furinamikuvn/antigravity-custom-theme-mod](https://github.com/furinamikuvn/antigravity-custom-theme-mod) (MIT).
+- **Claude Code desktop**: 4 pixel-art themes animated only with pixel effects: blinking stars, sparkles, a Bayer-dithered moon halo, a falling star and fireflies. A modified copy of Anthropic's `theme-examples` plugin (Apache-2.0).
 
-- **Antigravity**: nền video động phía sau toàn bộ giao diện, 9 preset (5 preset mới), đổi bằng nút **Custom theme** ở thanh bên. Dựa trên [furinamikuvn/antigravity-custom-theme-mod](https://github.com/furinamikuvn/antigravity-custom-theme-mod) (MIT).
-- **Claude desktop (tab Code)**: 4 theme pixel art có hiệu ứng pixel động (sao nhấp nháy, lấp lánh, quầng trăng dither, sao băng, đom đóm). Dựa trên plugin `theme-examples` của Anthropic (Apache-2.0).
+Tested on Ubuntu with Claude Code 2.1.330.
 
-Đã thử trên Ubuntu với Claude Code 2.1.330.
+## Demo
 
-> **Ảnh và video không có trong repo.** Chúng là fan art có bản quyền của các tác giả bên dưới. Các script tải video từ kho gốc của tác giả về máy bạn, rồi tự tạo ảnh pixel từ đó.
+> The GIFs below are **simulations** built by [docs/make_demos.py](docs/make_demos.py), not screen recordings. The Claude ones replay the theme's shader in Python on the real 160×90 still. The sidebar and message box are a mock of the frosted-glass UI. Short, small previews only: the artwork belongs to its authors (see [Credits](#credits)).
 
-## Cài đặt
+### Claude Code desktop (pixel art)
 
-Cần: `git`, `curl`, `ffmpeg`, `python3`, `python3-pil` (Pillow có libimagequant), Node.js 22+ cho Antigravity.
+| Moonlit Whale (`whale-moon-pixel`) | Snow & Moon (`snow-moon-pixel`) |
+|---|---|
+| ![Moonlit Whale](docs/demo/claude-whale.gif) | ![Snow & Moon](docs/demo/claude-snow.gif) |
+| **Sea Dream** (`sea-dream-pixel`) | **Blade Duet** (`blade-duet-pixel`) |
+| ![Sea Dream](docs/demo/claude-sea.gif) | ![Blade Duet](docs/demo/claude-blade.gif) |
+
+### Antigravity (video background)
+
+| DeepSeek Moonlit Whale Live | DeepSeek Underwater Maid Live |
+|---|---|
+| ![Moonlit Whale](docs/demo/antigravity-whale-moon.gif) | ![Underwater Maid](docs/demo/antigravity-whale-underwater.gif) |
+| **DeepSeek Whale Fantasy Live** | **Claude Moonlit Blade Live** |
+| ![Whale Fantasy](docs/demo/antigravity-whale-fantasy.gif) | ![Claude Blade](docs/demo/antigravity-boot-claude.gif) |
+| **Gemini Twin Blades Live** | **Gemini-chan Live** |
+| ![Gemini Twin Blades](docs/demo/antigravity-boot-antigravity.gif) | ![Gemini-chan](docs/demo/antigravity-wallpapergeminichan.gif) |
+| **Furina Live** | |
+| ![Furina](docs/demo/antigravity-furina-bg.gif) | |
+
+## Install
+
+Needs `git`, `curl`, `ffmpeg`, `python3` with Pillow (libimagequant), and Node.js 22+ for Antigravity.
 
 ```bash
-git clone https://github.com/discourdhieuanh-art/claude-code-antigravity-anime-themes.git && cd claude-code-antigravity-anime-themes
-./antigravity/install.sh           # clone mod gốc, áp bản vá, thêm preset, tải video
-bash ~/.local/share/antigravity-theme-mod/scripts/install-unix.sh   # daemon nền của mod gốc
-./claude/install.sh                # cắt khung hình, tạo ảnh pixel, cài plugin vào Claude
+git clone https://github.com/discourdhieuanh-art/claude-code-antigravity-anime-themes.git
+cd claude-code-antigravity-anime-themes
+./antigravity/install.sh        # clone the upstream mod, apply the patch, add presets, download the videos
+bash ~/.local/share/antigravity-theme-mod/scripts/install-unix.sh   # the upstream background daemon
+./claude/install.sh             # grab frames, build the pixel stills, install the plugin into Claude
 ```
 
-Nếu lệnh `claude` chưa có trong PATH: `CLAUDE=~/.config/Claude/claude-code/<phiên bản>/<mã>/claude ./claude/install.sh`.
+If `claude` is not on your PATH: `CLAUDE=/path/to/claude ./claude/install.sh` (in the desktop app it is under `~/.config/Claude/claude-code/<version>/<hash>/claude`).
 
-Chỉ muốn theme Claude: chạy `./antigravity/fetch-videos.sh <thư mục>` để có video, rồi `./claude/install.sh <thư mục>`. Hai video Gemini-chan và Furina lấy từ thư mục `themes/assets` của mod gốc.
+Only want the Claude themes? Run `./antigravity/fetch-videos.sh <folder>` to get the videos, then `./claude/install.sh <folder>`. Gemini-chan and Furina come from the upstream mod's `themes/assets`.
 
-### Dùng
+### Use
 
-- **Antigravity**: mở bằng `antigravity --remote-debugging-port=0 --remote-debugging-address=127.0.0.1`, bấm **Custom theme** ở thanh bên để chọn preset.
-- **Claude**: mở phiên mới, gửi một tin nhắn, gõ `/custom-theme whale-moon-pixel` (hoặc `snow-moon-pixel`, `sea-dream-pixel`, `blade-duet-pixel`). `/custom-theme list` liệt kê tất cả. Thư mục chưa chọn theme sẽ tự dùng Moonlit Whale. Muốn đổi mặc định, sửa `DEFAULT_THEME` trong `claude/plugin/theme-examples-default/hooks/register.tsx`.
+- **Antigravity**: start it with `antigravity --remote-debugging-port=0 --remote-debugging-address=127.0.0.1`, then click **Custom theme** in the sidebar to pick a preset.
+- **Claude**: open a new session, send a message, then type `/custom-theme whale-moon-pixel` (or `snow-moon-pixel`, `sea-dream-pixel`, `blade-duet-pixel`). `/custom-theme list` lists them all. Projects with no theme of their own get Moonlit Whale. To change that default, edit `DEFAULT_THEME` in `claude/plugin/theme-examples-default/hooks/register.tsx`.
 
-## Theme
+## What changed from the upstream Antigravity mod
 
-| Antigravity preset | Video |
+[antigravity/antigravity-mod.patch](antigravity/antigravity-mod.patch):
+
+- The daemon only accepts requests from `127.0.0.1` / `localhost`. File read/write APIs called from any other web page get 403.
+- Fixes the Custom theme button not showing in the sidebar of newer Antigravity builds.
+- [antigravity/themes.json](antigravity/themes.json) adds 5 video presets.
+
+## Why the Claude themes are not as sharp as Antigravity
+
+These are limits of the Claude Code theme API, not of the conversion:
+
+1. **No embedded images.** Antigravity lets the mod inject CSS and a `<video>` tag. A Claude theme backdrop is a **vector SVG** only, with `data:` URLs forbidden, so no PNG, JPG or video can go in.
+2. **The SVG is capped at 131,072 characters.** Each run of same-colour pixels is one path segment. A 160×90 image in 32 colours already takes 116k–127k characters. 320×180 would need about 4 times that.
+3. **The shader cannot load textures.** It only reads back the backdrop (that same 160×90 picture) and adds effects on top. It cannot add detail.
+4. **Upscaling.** On a 1920×1080 window each art pixel becomes a 12×12 block. A face is only a few pixels wide, worse in the duo themes, where each character gets 80×90.
+
+[claude/make_stills.py](claude/make_stills.py) keeps as much detail as fits: denoise, contrast and colour boost, unsharp mask, Lanczos downscale, then a libimagequant palette. For better results, start from real pixel art drawn at 160×90 instead of video frames.
+
+## Repository layout
+
+```
+antigravity/   patch, presets (themes.json), fetch-videos.sh, install.sh
+claude/        plugin/theme-examples-default (the Claude plugin), make_stills.py, grab-frames.sh, install.sh
+docs/          make_demos.py and the demo GIFs
+AGENTS.md      guide for AI coding agents (also CLAUDE.md)
+```
+
+## Credits
+
+| Video | Source |
 |---|---|
-| Gemini-chan Live, Furina Live, WLOP Cosmic, Midnight Obsidian | có sẵn trong mod gốc |
-| DeepSeek Whale Fantasy Live | [1745761934/dsh-skin-whale-fantasy](https://github.com/1745761934/dsh-skin-whale-fantasy) |
-| DeepSeek Moonlit Whale Live, DeepSeek Underwater Maid Live | [kingOfSoySauce/dsh-boot-animation](https://github.com/kingOfSoySauce/dsh-boot-animation) |
-| Claude Moonlit Blade Live, Gemini Twin Blades Live | [wynneceles/ai-boot-animations](https://github.com/wynneceles/ai-boot-animations) |
+| Gemini-chan, Furina (and WLOP Cosmic, Midnight Obsidian presets) | [furinamikuvn/antigravity-custom-theme-mod](https://github.com/furinamikuvn/antigravity-custom-theme-mod) |
+| DeepSeek Whale Fantasy | [1745761934/dsh-skin-whale-fantasy](https://github.com/1745761934/dsh-skin-whale-fantasy) |
+| DeepSeek Moonlit Whale, Underwater Maid | [kingOfSoySauce/dsh-boot-animation](https://github.com/kingOfSoySauce/dsh-boot-animation) |
+| Claude Moonlit Blade, Gemini Twin Blades | [wynneceles/ai-boot-animations](https://github.com/wynneceles/ai-boot-animations) |
 
-| Claude theme | Ảnh pixel làm từ |
+| Claude theme | Pixel art made from |
 |---|---|
 | Moonlit Whale | DeepSeek Moonlit Whale |
 | Snow & Moon | Gemini-chan + DeepSeek Moonlit Whale |
 | Sea Dream | DeepSeek Underwater Maid + Furina |
 | Blade Duet | Claude Moonlit Blade + Gemini Twin Blades |
 
-## Thay đổi so với mod Antigravity gốc (`antigravity/antigravity-mod.patch`)
+## License
 
-- Daemon chỉ nhận yêu cầu từ `127.0.0.1` / `localhost`; trang web khác gọi các API đọc/ghi file sẽ bị từ chối (403).
-- Sửa lỗi nút Custom theme không hiện ở thanh bên của bản Antigravity mới.
-- `antigravity/themes.json`: thêm 5 preset video (tổng 9 preset).
-
-## Vì sao ảnh trên Claude không sắc nét như video trên Antigravity
-
-Đây là giới hạn của API theme trong Claude Code, không phải do cách chuyển ảnh:
-
-1. **Không được nhúng ảnh.** Antigravity cho chèn CSS và thẻ `<video>` thẳng vào giao diện. Theme Claude chỉ có `backdrop` dạng **SVG vector**, cấm `data:` URL, nên không nhúng được PNG, JPG hay video.
-2. **SVG tối đa 131.072 ký tự.** Mỗi điểm ảnh phải vẽ bằng một đoạn path. Ở 160×90 điểm với 32 màu, ảnh đã dùng 116k–127k ký tự, gần chạm trần. Lên 320×180 cần khoảng gấp 4 lần, nên vượt giới hạn.
-3. **Shader không đọc được texture ngoài.** Shader chỉ đọc lại backdrop (chính ảnh 160×90 đó) và chỉ thêm hiệu ứng lên trên, không tạo thêm chi tiết.
-4. **Ảnh bị phóng to.** Cửa sổ 1920×1080 chia cho 160×90 nên mỗi điểm ảnh thành một ô 12×12. Gương mặt chỉ còn vài điểm ảnh, nên trông vỡ, nhất là theme ghép đôi (mỗi nhân vật chỉ có 80×90).
-
-`make_stills.py` đã cố giữ nét nhất trong giới hạn: lọc nhiễu, tăng tương phản và màu, làm nét, thu nhỏ Lanczos, rồi giảm màu bằng libimagequant. Muốn đẹp hơn thì nên vẽ hoặc chọn ảnh pixel art thật ở 160×90, không cắt từ video. Phải chờ API cho phép ảnh bitmap thì mới đạt độ nét như Antigravity.
-
-## Giấy phép
-
-- Code của repo này: MIT (`LICENSE`).
-- `claude/plugin/theme-examples-default`: bản sửa từ Anthropic `theme-examples`, Apache-2.0. Xem `LICENSE` và `CHANGES.md` trong đó.
-- `antigravity/antigravity-mod.patch`: bản vá cho mod MIT của furinamikuvn (`antigravity/LICENSE-upstream-MIT`).
-- Video, ảnh và nhân vật thuộc về tác giả và chủ sở hữu tương ứng, không phân phối kèm repo này.
+- This repository's code: MIT ([LICENSE](LICENSE)).
+- `claude/plugin/theme-examples-default`: modified from Anthropic `theme-examples`, Apache-2.0. See its `LICENSE` and `CHANGES.md`.
+- `antigravity/antigravity-mod.patch`: a patch to furinamikuvn's MIT mod ([antigravity/LICENSE-upstream-MIT](antigravity/LICENSE-upstream-MIT)).
+- Videos, artwork and characters belong to their authors and owners. They are not distributed here. The scripts download them from the original repositories. The GIFs in `docs/demo` are short, low-resolution previews only.
